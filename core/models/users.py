@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from sqlalchemy import String,func
-from sqlalchemy.orm import mapped_column,Mapped,relationship
+from sqlalchemy import String, func
+from sqlalchemy.orm import mapped_column, Mapped
 
 from core.database import Base
 
@@ -16,8 +16,8 @@ class User(Base):
     email : Mapped[str] = mapped_column(String(50),unique=True,index=True)
     is_active: Mapped[bool] = mapped_column(default=True)
 
-    create_at: Mapped[datetime] = mapped_column(server_default=func.now)
-    uppdate_at: Mapped[datetime] = mapped_column(server_default=func.now)
+    create_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    uppdate_at: Mapped[datetime | None] = mapped_column(onupdate=func.now())
     
     def __repr__(self)-> str:
         return f"<User id={self.id} email={self.email!r} >"
