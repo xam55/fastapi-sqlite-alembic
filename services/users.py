@@ -42,13 +42,26 @@ class UserServise:
         await self.repo.session.commit()
         return user
     
+
+    async def update_password(self,user_id:int,new_password:str):
+        user=await self.repo.get_user_by_id(user_id=user_id)
+        if not isinstance(user_id,int):
+            raise TypeError("user_id is not integer")
+        if not isinstance(new_password,str):
+            raise TypeError("new_password is not string")
+        
+        await self.repo.update_password(user_id=user_id,new_password=new_password)
+        await self.repo.session.commit()
+        return user
+
+
     async def update_name(self,user_id: int, new_name:str)->User | None:
         user= await self.repo.get_user_by_id(user_id=user_id)
 
         if user is None:
             return None
         
-        user.name = new_name
+        await self.repo.update_name(new_name=new_name,user_id=user_id)
         await self.repo.session.commit()
         return user
     

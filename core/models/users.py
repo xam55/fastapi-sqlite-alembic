@@ -15,7 +15,7 @@ class User(Base):
     name : Mapped[str] = mapped_column(String(50))
     email : Mapped[str] = mapped_column(String(50),unique=True,index=True)
     is_active: Mapped[bool] = mapped_column(default=True)
-
+    password : Mapped[str] = mapped_column(String(100))
     create_at: Mapped[datetime] = mapped_column(server_default=func.now())
     uppdate_at: Mapped[datetime | None] = mapped_column(onupdate=func.now())
     

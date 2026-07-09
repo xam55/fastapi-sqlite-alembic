@@ -9,8 +9,8 @@ class UserRepo:
         self.session = session
 
 
-    async def user_create(self,email:str,name:str):
-        user=User(email=email,name=name)
+    async def user_create(self,email:str,name:str,password:str):
+        user=User(email=email,name=name,password=password)
 
         self.session.add(user)
         await self.session.flush()
@@ -36,6 +36,16 @@ class UserRepo:
         await self.session.flush()
         return user
     
+
+    async def update_password(self,user_id:int,new_password:str):
+        user = await self.get_user_by_id(user_id)
+        if user is None:
+            return None
+        
+        user.password = new_password
+        await self.session.flush()
+        return user
+
     async def update_name(self,user_id:int,new_name:str):
         user= await self.get_user_by_id(user_id=user_id)
         if user is None:
